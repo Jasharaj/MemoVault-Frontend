@@ -38,9 +38,11 @@ export default function Login() {
       }
 
       // Store token and user data
-      localStorage.setItem('token', data.token);
-      if (rememberMe) {
-        localStorage.setItem('user', JSON.stringify(data.data));
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('token', data.token);
+        if (rememberMe) {
+          localStorage.setItem('user', JSON.stringify(data.data));
+        }
       }
 
       // Show success message
