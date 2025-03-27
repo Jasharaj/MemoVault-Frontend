@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -12,7 +12,13 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isBrowser, setIsBrowser] = useState(false);
   const router = useRouter();
+
+  // Check if code is running in browser
+  useEffect(() => {
+    setIsBrowser(true);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,10 +43,12 @@ export default function Login() {
         throw new Error(data.message || 'Login failed');
       }
 
-      // Store token and user data
-      localStorage.setItem('token', data.token);
-      if (rememberMe) {
-        localStorage.setItem('user', JSON.stringify(data.data));
+      // Store token and user data only in browser environment
+      if (isBrowser) {
+        localStorage.setItem('token', data.token);
+        if (rememberMe) {
+          localStorage.setItem('user', JSON.stringify(data.data));
+        }
       }
 
       // Show success message
