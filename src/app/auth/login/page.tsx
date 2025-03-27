@@ -1,12 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/layout/Navbar';
 import { BASE_URL } from '@/app/config';
-import { setLocalStorage } from '@/utils/localStorage';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -38,10 +37,10 @@ export default function Login() {
         throw new Error(data.message || 'Login failed');
       }
 
-      // Store token and user data using the safe utility functions
-      setLocalStorage('token', data.token);
+      // Store token and user data
+      localStorage.setItem('token', data.token);
       if (rememberMe) {
-        setLocalStorage('user', JSON.stringify(data.data));
+        localStorage.setItem('user', JSON.stringify(data.data));
       }
 
       // Show success message
