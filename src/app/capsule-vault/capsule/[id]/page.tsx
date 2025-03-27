@@ -28,6 +28,19 @@ const mockCapsule = {
   }
 };
 
+// This function is required for static site generation with dynamic routes
+export function generateStaticParams() {
+  // Return an array of objects with the id parameter
+  // For now, we're just pre-generating the route for the mock capsule
+  // In a real app, you would fetch all possible IDs from your API
+  return [
+    { id: '1' },
+    { id: '2' },
+    { id: '3' },
+    // Add more IDs as needed
+  ];
+}
+
 export default function CapsuleDetails() {
   const router = useRouter();
   const params = useParams();
